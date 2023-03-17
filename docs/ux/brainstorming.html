@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brainstorming et rédaction - AgileMind</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+</head>
+<body class="bg-gray-100">
+  <header class="bg-white shadow-md p-4">
+    <div class="container mx-auto">
+      <div class="flex justify-between items-center">
+        <h1 class="text-xl font-bold">AgileMind</h1>
+        <nav>
+          <ul class="flex space-x-4">
+            <li><a href="dashboard.html" class="text-gray-600 hover:text-indigo-500">Tableau de bord</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-indigo-500">Projets</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-indigo-500">Paramètres</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main class="container mx-auto mt-10 px-4">
+    <h2 class="text-2xl font-semibold mb-6">Brainstorming et rédaction</h2>
+    <div class="grid grid-cols-2 gap-8">
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold mb-4">Idées</h3>
+        <textarea id="ideas" name="ideas" rows="12" class="w-full border-2 border-gray-300 p-3 rounded-md" placeholder="Saisissez vos idées ici" required></textarea>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold mb-4">Rédaction des tâches</h3>
+        <textarea id="task-writing" name="task-writing" rows="12" class="w-full border-2 border-gray-300 p-3 rounded-md" placeholder="Rédigez vos tâches ici" required></textarea>
+      </div>
+    </div>
+    <div class="mt-6">
+      <button type="submit" class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-md shadow-md" onclick="refreshAOS()">Générer les résultats</button>
+    </div>
+	<div class="container mx-auto py-12">
+	  <h2 class="text-2xl font-semibold mb-6" >Résultats générés par l'IA</h2>
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+		<!-- Epic Card -->
+		<div class="opacity-0 bg-white shadow-md rounded-lg p-6" id="epicCard1"  data-aos="zoom-in" data-aos-easing="ease-out-elastic" data-aos-delay="100">
+		  <div class="flex justify-between items-start">
+			<h4 class="text-xl font-semibold text-indigo-600">Epic 1: Titre de l'épopée</h4>
+			<span class="text-gray-700">Estimation: 8h</span>
+		  </div>
+		  <p class="text-gray-700 mt-2">Description de l'épopée</p>
+		  <ul class="pl-6 mt-2 list-disc">
+			<!-- User Story -->
+			<li class="mt-2">
+			  <h5 class="font-semibold">User Story 1.1: Titre de l'histoire utilisateur</h5>
+			  <p class="text-gray-700">Description de l'histoire utilisateur</p>
+			  <ul class="pl-6 mt-2 list-decimal">
+				<!-- Task -->
+				<li class="mt-1">
+				  <p class="text-gray-700">Task 1.1.1: Titre de la tâche</p>
+				  <p class="text-gray-500">Description de la tâche</p>
+				</li>
+				<!-- Task -->
+				<li class="mt-1">
+				  <p class="text-gray-700">Task 1.1.2: Titre de la tâche</p>
+				  <p class="text-gray-500">Description de la tâche</p>
+				</li>
+			  </ul>
+			</li>
+		  </ul>
+		   <button onclick="requestVariation(1)" class="mt-4 bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+				Variation
+			</button>
+		</div>
+		<!-- Epic Card -->
+		<div class="opacity-0 bg-white shadow-md rounded-lg p-6" id="epicCard2"  data-aos="zoom-in" data-aos-easing="ease-out-elastic" data-aos-delay="100">
+		  <div class="flex justify-between items-start">
+			<h4 class="text-xl font-semibold text-indigo-600">Epic 2: Titre de l'épopée</h4>
+			<span class="text-gray-700">Estimation: 12h</span>
+		  </div>
+		  <p class="text-gray-700 mt-2">Description de l'épopée</p>
+		  <ul class="pl-6 mt-2 list-disc">
+			<!-- User Story -->
+			<li class="mt-2">
+			  <h5 class="font-semibold">User Story 2.1: Titre de l'histoire utilisateur</h5>
+			  <p class="text-gray-700">Description de l'histoire utilisateur</p>
+			  <ul class="pl-6 mt-2 list-decimal">
+				<!-- Task -->
+				<li class="mt-1">
+				  <p class="text-gray-700">Task 2.1.1: Titre de la tâche</p>
+				  <p class="text-gray-500">Description de la tâche</p>
+				</li>
+				<!-- Task -->
+				<li class="mt-1">
+					<p class="text-gray-700">Task 2.1.2: Titre de la tâche</p>
+				    <p class="text-gray-500">Description de la tâche</p>
+				</li>
+			  </ul>
+			</li>
+		  </ul>
+		  <button onclick="requestVariation(1)" class="mt-4 bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+				Variation
+			</button>
+		</div>
+		<!-- Epic Card -->
+		<div class="opacity-0 bg-white shadow-md rounded-lg p-6"  id="epicCard3" data-aos="zoom-in" data-aos-easing="ease-out-elastic" data-aos-delay="100">
+		  <div class="flex justify-between items-start">
+			<h4 class="text-xl font-semibold text-indigo-600">Epic 3: Titre de l'épopée</h4>
+			<span class="text-gray-700">Estimation: 5h</span>
+		  </div>
+		  <p class="text-gray-700 mt-2">Description de l'épopée</p>
+		  <ul class="pl-6 mt-2 list-disc">
+			<!-- User Story -->
+			<li class="mt-2">
+			  <h5 class="font-semibold">User Story 3.1: Titre de l'histoire utilisateur</h5>
+			  <p class="text-gray-700">Description de l'histoire utilisateur</p>
+			  <ul class="pl-6 mt-2 list-decimal">
+				<!-- Task -->
+				<li class="mt-1">
+				  <p class="text-gray-700">Task 3.1.1: Titre de la tâche</p>
+				  <p class="text-gray-500">Description de la tâche</p>
+				</li>
+				<!-- Task -->
+				<li class="mt-1">
+				  <p class="text-gray-700">Task 3.1.2: Titre de la tâche</p>
+				  <p class="text-gray-500">Description de la tâche</p>
+				</li>
+			  </ul>
+			</li>
+		  </ul>
+		  <button onclick="requestVariation(1)" class="mt-4 bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+				Variation
+			</button>
+		</div>
+		<!-- Epic Card -->
+		<div class="opacity-0 bg-white shadow-md rounded-lg p-6" id="epicCard4" data-aos="zoom-in" data-aos-easing="ease-out-elastic" data-aos-delay="100">
+		  <div class="flex justify-between items-start">
+			<h4 class="text-xl font-semibold text-indigo-600">Epic 2: Titre de l'épopée</h4>
+			<span class="text-gray-700">Estimation: 12h</span>
+		  </div>
+		  <p class="text-gray-700 mt-2">Description de l'épopée</p>
+		  <ul class="pl-6 mt-2 list-disc">
+			<!-- User Story -->
+			<li class="mt-2">
+			  <h5 class="font-semibold">User Story 2.1: Titre de l'histoire utilisateur</h5>
+			  <p class="text-gray-700">Description de l'histoire utilisateur</p>
+			  <ul class="pl-6 mt-2 list-decimal">
+				<!-- Task -->
+				<li class="mt-1">
+				  <p class="text-gray-700">Task 2.1.1: Titre de la tâche</p>
+				  <p class="text-gray-500">Description de la tâche</p>
+				</li>
+				<!-- Task -->
+				<li class="mt-1">
+					<p class="text-gray-700">Task 2.1.2: Titre de la tâche</p>
+				    <p class="text-gray-500">Description de la tâche</p>
+				</li>
+			  </ul>
+			</li>
+		  </ul>
+		  <button onclick="requestVariation(1)" class="mt-4 bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+				Variation
+			</button>
+		</div>
+	</div>
+</div>
+
+   
+   </main>
+   
+   <script>
+  AOS.init();
+</script>
+<script>
+  function refreshAOS() {
+    // Unhide the cards
+    document.getElementById('epicCard1').classList.remove('hidden');
+    document.getElementById('epicCard2').classList.remove('hidden');
+    document.getElementById('epicCard3').classList.remove('hidden');
+    document.getElementById('epicCard4').classList.remove('hidden');
+
+    // Refresh AOS and animate the cards
+    AOS.refresh();
+  }
+</script>
+
+</body>
+</html>
