@@ -1,0 +1,319 @@
+openapi: 3.0.0
+info:
+  title: AgileMind API
+  version: 1.0.0
+servers:
+  - url: https://api.agilemind.com/v1
+paths:
+  /auth/login:
+    post:
+      summary: Authenticate a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: User successfully authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT token
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        '201':
+          description: User successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT token
+  /projects:
+    get:
+      summary: Get all projects for the authenticated user
+      responses:
+        '200':
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    name:
+                      type: string
+                    description:
+                      type: string
+    post:
+      summary: Create a new project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Project successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                  description:
+                    type: string
+  /projects/{projectId}:
+    get:
+      summary: Get project details by ID
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Project details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                  description:
+                    type: string
+    put:
+      summary: Update project details by ID
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '200':
+          description: Project successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                  description:
+                    type: string
+  /ia/brainstorm:
+    post:
+      summary: Send a prompt to the AI for brainstorming
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            projectId:
+              type: string
+              format: uuid
+            prompt:
+              type: string
+  responses:
+    '200':
+      description: AI-generated results
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              epics:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    estimatedTime:
+                      type: number
+                      format: float
+                    tasks:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                          title:
+                            type: string
+                          description:
+                            type: string
+                          estimatedTime:
+                            type: number
+                            format: float
+/estimations:
+post:
+summary: Estimate development time and budget
+requestBody:
+content:
+application/json:
+schema:
+type: object
+properties:
+projectId:
+type: string
+format: uuid
+epics:
+type: array
+items:
+type: object
+properties:
+id:
+type: string
+format: uuid
+title:
+type: string
+description:
+type: string
+estimatedTime:
+type: number
+format: float
+tasks:
+type: array
+items:
+type: object
+properties:
+id:
+type: string
+format: uuid
+title:
+                          type: string
+                            estimatedTime:
+                              type: number
+                              format: float
+      responses:
+        '200':
+          description: Estimations generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  epics:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        estimatedTime:
+                          type: number
+                          format: float
+                        tasks:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                format: uuid
+                              title:
+                                type: string
+                              description:
+                                type: string
+                              estimatedTime:
+                                type: number
+                                format: float
+                  totalEstimation:
+                    type: object
+                    properties:
+                      developmentTime:
+                        type: number
+                        format: float
+                      budget:
+                        type: number
+                        format: float
+                  teamMembers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        name:
+                          type: string
+                        role:
+                          type: string
+                        hourlyRate:
+                          type: number
+                          format: float
