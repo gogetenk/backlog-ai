@@ -1,0 +1,79 @@
+﻿@using AgileMind.Web.Components.Services
+@inject IApiService ApiService
+
+<div class="fixed bottom-0 left-0 mb-10 w-full bg-transparent p-4 flex justify-center">
+    <div class="overflow-hidden max-w-[90%] absolute bottom-0 z-10 flex flex-col w-full sm:max-w-lg m-auto shadow-lg divide-zinc-600 min-h-12 shadow-black/40 rounded-[24px]">
+        @if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <div class="error-message">@_errorMessage</div>
+        }
+        <div style="height: 0px; transform-origin: 50% 50% 0px;"></div>
+        <div class="flex items-center flex-1 min-w-0 px-3 md:pl-4 bg-black  relative z-10">
+            <form class="w-full h-full" @onsubmit="HandleSubmit">
+                <div class="relative w-full flex items-center transition-all duration-300 min-h-full h-fit" style="height: 48px;">
+                    <label for="textarea-input" class="sr-only">Prompt</label>
+                    <div class="relative flex flex-1 min-w-0 self-start">
+                        <div class="flex-[1_0_50%] min-w-[50%] overflow-x-visible -ml-[100%] opacity-0 invisible pointer-events-none">
+                            <div class="[&amp;_textarea]:px-0 opacity-0 invisible pointer-events-none">An ecommerce store for snowboards</div>
+                        </div>
+                        <textarea id="home-prompt" maxlength="1000" class="flex-[1_0_50%] min-w-[50%] disabled:opacity-80 overflow-hidden text-white text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-teal-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&amp;_textarea]:px-0" style="color-scheme: dark; height: 47px !important;" spellcheck="false" rows="1" placeholder="An ecommerce store for snowboards" disabled="@isLoading">
+                        </textarea>
+                    </div><div class="flex items-center">
+                        <label data-id="prompt-form-image-upload" for="fileUpload" class="shrink-0 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-transparent text-white hover:bg-gray-800 flex items-center justify-center focus-visible:ring-0 focus-visible:bg-gray-800 rounded-full w-[28px] h-[28px] cursor-pointer focus-within:bg-gray-800" data-state="closed">
+                            <input class="sr-only" id="fileUpload" type="file" disabled="@isLoading">
+                            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"><g clip-path="url(#a)"><path fill="currentColor" fill-rule="evenodd" d="M14.5 2.5h-13v6.69l1.47-1.47.22-.22h3.75l.03-.03 3.5-3.5h1.06l2.97 2.97V2.5ZM8 8.56l1.53 1.53.53.53L9 11.68l-.53-.53L6.32 9H3.81l-2.28 2.28-.03.03v1.19a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.06L11 5.56 8.03 8.53 8 8.56Zm-8 2.25v1.69A2.5 2.5 0 0 0 2.5 15h11a2.5 2.5 0 0 0 2.5-2.5V9.56l.56-.56-.53-.53-.03-.03V1H0v9.69l-.06.06.06.06Z" clip-rule="evenodd"></path></g><defs><clipPath id="a"><path fill="currentColor" d="M0 0h16v16H0z"></path></clipPath></defs></svg><span class="sr-only">Upload image</span>
+                        </label>
+                        <button class="shrink-0 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-transparent text-white hover:bg-gray-800 flex items-center justify-center focus-visible:ring-0 focus-visible:bg-gray-800 rounded-full w-[28px] h-[28px]" type="submit" id="send-button" data-state="closed" disabled="@isLoading"><span class="sr-only">Send</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.5 3V2.25H15V3V10C15 10.5523 14.5522 11 14 11H3.56062L5.53029 12.9697L6.06062 13.5L4.99996 14.5607L4.46963 14.0303L1.39641 10.9571C1.00588 10.5666 1.00588 9.93342 1.39641 9.54289L4.46963 6.46967L4.99996 5.93934L6.06062 7L5.53029 7.53033L3.56062 9.5H13.5V3Z" fill="currentColor"></path></svg></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string _userPrompt;
+    private bool isLoading;
+    private string _errorMessage;
+
+    private async Task HandleSubmit()
+    {
+        if (!string.IsNullOrWhiteSpace(_userPrompt))
+        {
+            try
+            {
+                isLoading = true;
+                var result = await ApiService.PostPromptAsync<object>(_userPrompt);
+                // Traiter la réponse ici
+            }
+            catch (ApplicationException ex)
+            {
+                _errorMessage = ex.Message;
+            }
+            finally
+            {
+                isLoading = false;
+            }
+        }
+        else
+        {
+            _errorMessage = "Le champ prompt ne peut pas être vide.";
+        }
+    }
+
+    private async Task HandleFileUpload(ChangeEventArgs e)
+    {
+        try
+        {
+            // var file = (e.Target as HTMLInputElement)?.Files?.FirstOrDefault();
+            // if (file != null)
+            // {
+            //     // Logique d'upload de fichier ici
+            // }
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Erreur lors de l'upload du fichier : {ex.Message}";
+        }
+    }
+}

@@ -8,7 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AgileMind.Web.Client\AgileMind.Web.Client.csproj" />
+    <ProjectReference Include="..\AgileMind.Web.Components\AgileMind.Web.Components.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
 </Project>

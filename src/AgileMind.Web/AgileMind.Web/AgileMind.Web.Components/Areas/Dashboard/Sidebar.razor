@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Components.Routing
+
+@code {
+    private List<string> backlogVersions = new List<string>();
+
+    protected override void OnInitialized()
+    {
+        // Initialiser avec des versions existantes si nécessaire
+        backlogVersions.Add("Version 1");
+        backlogVersions.Add("Version 2");
+        backlogVersions.Add("Version 3");
+        // ...
+    }
+
+    public void AddNewVersion(string versionName)
+    {
+        backlogVersions.Add(versionName);
+        StateHasChanged(); // Notifie Blazor que l'état du composant a changé
+    }
+}
+
+<aside class="w-[20%] h-full overflow-y-auto text-white">
+    <h3 class="text-lg font-bold p-4">Versions</h3>
+    <div class="p-4">
+        @foreach (var version in backlogVersions)
+        {
+            <NavLink class="block py-2 text-sm hover:text-blue-600" href="@($"version/{version}")">
+                @version
+            </NavLink>
+        }
+    </div>
+</aside>

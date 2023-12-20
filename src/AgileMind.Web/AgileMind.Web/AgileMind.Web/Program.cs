@@ -1,5 +1,6 @@
 using AgileMind.Web.Client.Pages;
 using AgileMind.Web.Components;
+using AgileMind.Web.Components.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddHttpClient<IApiService, ApiService>(client => client.BaseAddress = new Uri("https://localhost:7035"));
 
 var app = builder.Build();
 

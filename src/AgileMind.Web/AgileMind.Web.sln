@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileMind.Web", "AgileMind.Web\AgileMind.Web\AgileMind.Web.csproj", "{19EA352E-664D-4E2F-A75D-566B10BC3534}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileMind.Web", "AgileMind.Web\AgileMind.Web\AgileMind.Web.csproj", "{19EA352E-664D-4E2F-A75D-566B10BC3534}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileMind.Web.Client", "AgileMind.Web\AgileMind.Web.Client\AgileMind.Web.Client.csproj", "{F29911D9-BF84-4072-82E5-CDE33708A9D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileMind.Web.Client", "AgileMind.Web\AgileMind.Web.Client\AgileMind.Web.Client.csproj", "{F29911D9-BF84-4072-82E5-CDE33708A9D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileMind.Web.Components", "AgileMind.Web\AgileMind.Web.Components\AgileMind.Web.Components.csproj", "{BC28CE40-56ED-41FB-86F6-B82D97604746}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F29911D9-BF84-4072-82E5-CDE33708A9D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F29911D9-BF84-4072-82E5-CDE33708A9D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F29911D9-BF84-4072-82E5-CDE33708A9D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC28CE40-56ED-41FB-86F6-B82D97604746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC28CE40-56ED-41FB-86F6-B82D97604746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC28CE40-56ED-41FB-86F6-B82D97604746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC28CE40-56ED-41FB-86F6-B82D97604746}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
