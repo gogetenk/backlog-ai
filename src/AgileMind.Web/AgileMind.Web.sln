@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileMind.Web.Client", "Agi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileMind.Web.Components", "AgileMind.Web\AgileMind.Web.Components\AgileMind.Web.Components.csproj", "{BC28CE40-56ED-41FB-86F6-B82D97604746}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileMind.Application", "AgileMind.Web\AgileMind.Application\AgileMind.Application.csproj", "{6759970E-A02D-444F-9B11-241EF4A556C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E25FFE92-B2C8-414E-9DA2-C9ABA88BDC61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileMind.Infrastructure", "AgileMind.Infrastructure\AgileMind.Infrastructure.csproj", "{5392C19C-13D4-4DAA-8651-F9DD687AE314}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +33,24 @@ Global
 		{BC28CE40-56ED-41FB-86F6-B82D97604746}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC28CE40-56ED-41FB-86F6-B82D97604746}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC28CE40-56ED-41FB-86F6-B82D97604746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6759970E-A02D-444F-9B11-241EF4A556C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6759970E-A02D-444F-9B11-241EF4A556C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6759970E-A02D-444F-9B11-241EF4A556C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6759970E-A02D-444F-9B11-241EF4A556C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5392C19C-13D4-4DAA-8651-F9DD687AE314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5392C19C-13D4-4DAA-8651-F9DD687AE314}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5392C19C-13D4-4DAA-8651-F9DD687AE314}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5392C19C-13D4-4DAA-8651-F9DD687AE314}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{19EA352E-664D-4E2F-A75D-566B10BC3534} = {E25FFE92-B2C8-414E-9DA2-C9ABA88BDC61}
+		{F29911D9-BF84-4072-82E5-CDE33708A9D4} = {E25FFE92-B2C8-414E-9DA2-C9ABA88BDC61}
+		{BC28CE40-56ED-41FB-86F6-B82D97604746} = {E25FFE92-B2C8-414E-9DA2-C9ABA88BDC61}
+		{6759970E-A02D-444F-9B11-241EF4A556C3} = {E25FFE92-B2C8-414E-9DA2-C9ABA88BDC61}
+		{5392C19C-13D4-4DAA-8651-F9DD687AE314} = {E25FFE92-B2C8-414E-9DA2-C9ABA88BDC61}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E9B0A730-B61B-43FC-83A9-70222F4D085E}
