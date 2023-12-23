@@ -7,7 +7,7 @@ public class UserStory
     public string Description { get; private set; }
     public bool IsCompleted { get; private set; }
 
-    public UserStory(string title, string description)
+    public UserStory(string title, string description, int complexity)
     {
         Id = Guid.NewGuid().ToString();
         Title = title;
@@ -18,20 +18,15 @@ public class UserStory
     public void UpdateTitle(string newTitle)
     {
         Title = newTitle;
-        // Additional business logic can be added here
     }
 
     public void UpdateDescription(string newDescription)
     {
         Description = newDescription;
-        // Additional business logic can be added here
     }
 
     public void MarkAsCompleted()
     {
         IsCompleted = true;
-        // Additional business logic can be added here
     }
-
-    // Other domain behaviors and methods as needed
 }

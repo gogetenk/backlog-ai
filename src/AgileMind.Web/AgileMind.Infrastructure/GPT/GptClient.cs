@@ -2,71 +2,102 @@
 using AgileMind.Application.Interfaces;
 using Azure;
 using Azure.AI.OpenAI;
+using System.Text.Json;
 
 namespace AgileMind.Infrastructure.GPT
 {
     public class GptClient : IAiClient
     {
-        private readonly string apiKey = "YOUR_API_KEY";
+        private readonly string azureOpenAIResourceUri = "https://my-resource.openai.azure.com/";
+        private readonly AzureKeyCredential azureOpenAIApiKey = new(Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY"));
 
         public async Task<Backlog> GenerateBacklogFromPrompt(string userPrompt)
         {
-            var client = new OpenAIClient("your-api-key-from-platform.openai.com");
+            var client = new OpenAIClient(new Uri(azureOpenAIResourceUri), azureOpenAIApiKey);
+            var prompt = BuildPrompt(userPrompt);
+
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
-                DeploymentName = "gpt-4-0613", // Use DeploymentName for "model" with non-Azure clients
+                DeploymentName = "gpt-3.5-turbo",
                 Messages =
                 {
-                    // The system message represents instructions or other guidance about how the assistant should behave
-                    new ChatRequestSystemMessage("You are a helpful assistant. You will talk like a pirate."),
-                    // User messages represent current or historical input from the end user
-                    new ChatRequestUserMessage("Can you help me?"),
-                    // Assistant messages represent historical responses from the assistant
-                    new ChatRequestAssistantMessage("Arrrr! Of course, me hearty! What can I do for ye?"),
-                    new ChatRequestUserMessage("What's the best way to train a parrot?"),
+                    new ChatRequestSystemMessage(prompt)
                 }
             };
 
             Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
             ChatResponseMessage responseMessage = response.Value.Choices[0].Message;
 
-            // Process the generated text and create a Backlog object
-            //Backlog generatedBacklog = ProcessGeneratedText(responseMessage.Content);
+            Backlog generatedBacklog = ProcessGeneratedText(responseMessage.Content);
 
-            return new("Toto","titi");
+            return generatedBacklog;
         }
 
-        //private Backlog ProcessGeneratedText(string generatedText)
-        //{
-        //    // Split the generated text into individual lines
-        //    string[] lines = generatedText.Split('\n');
+        private string BuildPrompt(string userPrompt)
+        {
+            return $"As an Agile Expert and Scrum Master, transform the following requirement into a structured backlog with user stories : '{userPrompt}'" +
+                   "Each user story should have a title, description, and a complexity estimation following the Fibonacci sequence. " +
+                   "Please provide a RFC8259 compliant JSON response without any explanations, following this format:\n" +
+                   "{\n" +
+                   "  \"backlogTitle\": \"<Title Here>\",\n" +
+                   "  \"backlogDescription\": \"<Description Here>\",\n" +
+                   "  \"userStories\": [\n" +
+                   "    {\n" +
+                   "      \"title\": \"<User Story Title>\",\n" +
+                   "      \"description\": \"<User Story Description>\",\n" +
+                   "      \"complexity\": <Fibonacci Number>\n" +
+                   "    }\n" +
+                   "    // ...\n" +
+                   "  ]\n" +
+                   "}\n" +
+                   "Important: don't write anything else than the required json. No introduction. No politeness. NOTHING.";
+        }
 
-        //    // Create a new Backlog object
-        //    Backlog backlog = new Backlog();
 
-        //    // Iterate through each line of the generated text
-        //    foreach (string line in lines)
-        //    {
-        //        // Trim any leading or trailing whitespace
-        //        string trimmedLine = line.Trim();
+        private Backlog ProcessGeneratedText(string generatedText)
+        {
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    WriteIndented = true
+                };
 
-        //        // Skip empty lines
-        //        if (string.IsNullOrEmpty(trimmedLine))
-        //        {
-        //            continue;
-        //        }
+                var backlogData = JsonSerializer.Deserialize<BacklogData>(generatedText, options);
+                if (backlogData == null)
+                {
+                    throw new InvalidOperationException("Unable to parse the GPT response into a backlog.");
+                }
 
-        //        // Create a new Task object
-        //        Task task = new Task();
+                var backlog = new Backlog(backlogData.BacklogTitle, backlogData.BacklogDescription);
+                foreach (var story in backlogData.UserStories)
+                {
+                    backlog.AddUserStory(new UserStory(story.Title, story.Description, story.));
+                }
 
-        //        // Set the task description to the trimmed line
-        //        task.Description = trimmedLine;
+                return backlog;
+            }
+            catch (JsonException ex)
+            {
+                // Handle JSON parsing error
+                throw new InvalidOperationException("JSON parsing error: " + ex.Message, ex);
+            }
+        }
 
-        //        // Add the task to the backlog
-        //        backlog.Tasks.Add(task);
-        //    }
+        private class BacklogData
+        {
+            public string BacklogTitle { get; set; }
+            public string BacklogDescription { get; set; }
+            public List<UserStoryData> UserStories { get; set; } = new List<UserStoryData>();
+        }
 
-        //    return backlog;
-        //}
+        private class UserStoryData
+        {
+            public string Title { get; set; }
+            public string Description { get; set; }
+            public int Complexity { get; set; } // Added property
+        }
+
     }
 }
