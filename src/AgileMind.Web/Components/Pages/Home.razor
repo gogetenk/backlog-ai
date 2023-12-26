@@ -1,0 +1,52 @@
+﻿@page "/"
+@using AgileMind.Web.Client.Pages
+@using AgileMind.Web.Components
+@using AgileMind.Web.Components.Areas.Dashboard
+@using AgileMind.Web.Components.Services
+@using AgileMind.Web.Dto
+@using static AgileMind.Web.Components.Services.ApiService
+@inject IApiService ApiService
+
+@if (currentBacklog != null && currentBacklog.UserStories.Any())
+{
+    <BacklogGrid UserStories="currentBacklog.UserStories" />
+}
+else
+{
+    <EmptyBacklogMessage />
+}
+
+<CascadingValue Value="this">
+    <UserPrompt OnBacklogReceived="HandleBacklogReceived" />
+</CascadingValue>
+
+@code {
+    private BacklogDto currentBacklog;
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentBacklog = await LoadBacklogAsync();
+    }
+
+    private async Task<BacklogDto> LoadBacklogAsync()
+    {
+        try
+        {
+            // Remplacez ceci par l'appel API réel pour récupérer le backlog
+            // return await ApiService.GetBacklogItemsAsync();
+            return null;
+        }
+        catch (Exception ex)
+        {
+            // Gérer les exceptions ici
+            return new BacklogDto();
+        }
+    }
+
+    private void HandleBacklogReceived(BacklogDto newBacklog)
+    {
+        currentBacklog = newBacklog;
+        StateHasChanged();
+    }
+}
+

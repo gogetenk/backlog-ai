@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Components.Web;
+@page "/event-handler-2"
+
+<PageTitle>Event Handler 2</PageTitle>
+
+<h1>Event Handler Example 2</h1>
+
+<h2>@currentHeading</h2>
+
+<p>
+    <label class="text-white">
+        New title
+        <input @bind="newHeading" class="text-black" />
+    </label>
+    <button class="text-white" @onclick="UpdateHeading">
+        Update heading
+    </button>
+</p>
+
+@code {
+    private string currentHeading = "Initial heading";
+    private string? newHeading;
+
+    private async Task UpdateHeading()
+    {
+        await Task.Delay(2000);
+
+        currentHeading = $"{newHeading}!!!";
+    }
+}

@@ -1,0 +1,17 @@
+﻿@using AgileMind.Web.Dto
+
+@code {
+    [Parameter]
+    public List<UserStoryDto> UserStories { get; set; }
+}
+
+<div class="w-[80%] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 auto-cols-max">
+    @foreach (var story in UserStories)
+    {
+        <div class="animate-fadeInUp">
+            <BacklogCard Title="@story.Title"
+                         ShortDescription="@story.Title"
+                         DetailedDescription="@story.Description" />
+        </div>
+    }
+</div>
