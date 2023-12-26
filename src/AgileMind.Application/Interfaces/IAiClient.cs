@@ -1,5 +1,4 @@
-﻿
-using AgileMind.Application.Domain;
+﻿using AgileMind.Application.Domain;
 
 namespace AgileMind.Application.Interfaces;
 

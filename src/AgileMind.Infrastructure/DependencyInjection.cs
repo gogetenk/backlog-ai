@@ -10,6 +10,7 @@ public static class DependencyInjection
     public static void AddInfrastructure(this IServiceCollection services)
     {
         services.AddScoped<IBacklogRepository, BacklogRepository>();
-        services.AddScoped<IAiClient, GptClient>();
+        //services.AddSingleton<IAiClient, FakeAiClient>();
+        services.AddSingleton<IAiClient, GptClient>();
     }
 }

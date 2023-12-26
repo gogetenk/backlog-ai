@@ -17,7 +17,7 @@ namespace AgileMind.Infrastructure.Gpt
 
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
-                DeploymentName = "gpt-3.5-turbo-1106",
+                DeploymentName = "gpt-4-1106-preview",
                 Messages =
                 {
                     new ChatRequestSystemMessage(prompt)
