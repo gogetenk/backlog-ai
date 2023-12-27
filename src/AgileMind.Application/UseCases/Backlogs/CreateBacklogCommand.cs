@@ -20,7 +20,7 @@ public record CreateBacklogCommand(string UserPrompt) : IRequest<Backlog>
         public async Task<Backlog> Handle(CreateBacklogCommand request, CancellationToken cancellationToken)
         {
             // Using GPT service to generate backlog details
-            var generatedBacklog = await _aiClient.GenerateBacklogFromPrompt(request.UserPrompt);
+            var generatedBacklog = await _aiClient.GenerateBacklogFromPrompt(request.UserPrompt, cancellationToken);
             var backlog = new Backlog(generatedBacklog.Title, generatedBacklog.Description);
 
             foreach (var story in generatedBacklog.UserStories)

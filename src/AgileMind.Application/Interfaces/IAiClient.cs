@@ -4,5 +4,5 @@ namespace AgileMind.Application.Interfaces;
 
 public interface IAiClient
 {
-    Task<Backlog> GenerateBacklogFromPrompt(string userPrompt);
+    Task<Backlog> GenerateBacklogFromPrompt(string userPrompt, CancellationToken cancellationToken);
 }

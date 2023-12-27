@@ -5,7 +5,7 @@ namespace AgileMind.Infrastructure.Gpt;
 
 public class FakeAiClient : IAiClient
 {
-    public Task<Backlog> GenerateBacklogFromPrompt(string userPrompt)
+    public Task<Backlog> GenerateBacklogFromPrompt(string userPrompt, CancellationToken cancellationToken)
     {
         // Création d'un backlog factice avec titre et description
         var backlog = new Backlog($"Backlog pour: {userPrompt}", "Description factice du backlog");
