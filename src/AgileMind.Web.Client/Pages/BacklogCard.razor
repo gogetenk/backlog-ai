@@ -7,6 +7,9 @@
 
     [Parameter]
     public string DetailedDescription { get; set; }
+
+    [Parameter]
+    public int Complexity { get; set; }
 }
 
 <div class="rounded-lg shadow-sm w-full h-full bg-gray-800 text-white border-gray-700 p-4" data-v0-t="card">
@@ -30,5 +33,8 @@
     </div>
     <div class="p-6 grid gap-2">
         <div class="text-sm font-semibold">@DetailedDescription</div>
+    </div>
+    <div class="p-6 grid gap-2">
+        <div class="text-sm font-semibold">@Complexity</div>
     </div>
 </div>

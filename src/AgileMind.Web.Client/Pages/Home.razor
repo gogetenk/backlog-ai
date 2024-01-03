@@ -3,6 +3,7 @@
 @using AgileMind.Web.Components
 @using AgileMind.Web.Components.Services
 @using AgileMind.Web.Dto
+@using Microsoft.AspNetCore.SignalR.Client
 @using static AgileMind.Web.Components.Services.ApiService
 @rendermode InteractiveAuto
 @inject IApiService ApiService
@@ -58,11 +59,30 @@ else
 </div>
 
 @code {
-    private BacklogDto currentBacklog;
+    private BacklogDto currentBacklog = new();
 
     protected override async Task OnInitializedAsync()
     {
-        currentBacklog = await LoadBacklogAsync();
+        currentBacklog = new();
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl("https://localhost:7035/backlogHub") // Remplacez par l'URL de votre hub
+            .Build();
+
+        _hubConnection.On<UserStoryDto>("ReceiveUserStory", (story) =>
+        {
+            // Traitez la User Story ici
+            // Par exemple, mettez à jour une liste ou un état de l'interface utilisateur
+            // Utilisez InvokeAsync si vous devez mettre à jour l'interface utilisateur
+
+            currentBacklog.UserStories.Add(story);
+            InvokeAsync(() =>
+            {
+                StateHasChanged(); // Notifie Blazor qu'une mise à jour de l'UI est nécessaire
+            });
+        });
+
+        await _hubConnection.StartAsync();
+        // currentBacklog = await LoadBacklogAsync();
     }
 
     private async Task<BacklogDto> LoadBacklogAsync()
@@ -123,6 +143,16 @@ else
         catch (Exception ex)
         {
             _errorMessage = $"Erreur lors de l'upload du fichier : {ex.Message}";
+        }
+    }
+
+    private HubConnection _hubConnection;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_hubConnection != null)
+        {
+            await _hubConnection.DisposeAsync();
         }
     }
 }

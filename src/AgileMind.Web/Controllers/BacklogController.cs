@@ -1,5 +1,4 @@
-﻿using AgileMind.Application.Domain;
-using AgileMind.Application.UseCases.Backlogs;
+﻿using AgileMind.Application.UseCases.Backlogs;
 using AgileMind.Web.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -37,11 +36,4 @@ public class BacklogController : ControllerBase
         };
         return CreatedAtAction("GetBacklogById", new { id = dto.Id }, dto);
     }
-
-    [HttpGet]
-    public async Task<IActionResult> GetBacklogById()
-    {
-        return Ok("Toto");
-    }
-
 }
