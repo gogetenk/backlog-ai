@@ -23,8 +23,8 @@ public class GptClient : IAiClient
         var prompt = BuildPrompt(userPrompt);
         var chatCompletionsOptions = new ChatCompletionsOptions()
         {
-            //DeploymentName = "gpt-4-1106-preview",
-            DeploymentName = "gpt-3.5-turbo-1106",
+            DeploymentName = "gpt-4-1106-preview",
+            //DeploymentName = "gpt-3.5-turbo-1106",
             Messages =
                 {
                     new ChatRequestSystemMessage(prompt)
@@ -62,6 +62,6 @@ public class GptClient : IAiClient
                "    // ...\n" +
                "  ]\n" +
                "}\n" +
-               "Important: don't write anything else than the required json. No introduction. No politeness. No markdown code to wrap the json. NOTHING.";
+               "Important: don't write anything else than the required json. No introduction. No politeness. No markdown code to wrap the json. NOTHING. Answer in the same language than the user prompt.";
     }
 }

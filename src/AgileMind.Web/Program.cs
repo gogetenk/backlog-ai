@@ -19,7 +19,7 @@ builder.Services.AddInfrastructure();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<UserStory>());
 
 builder.Services.AddHttpClient<IApiService, ApiService>(client => client.BaseAddress = new Uri("https://localhost:7035"));
-builder.Services.AddSingleton(new OpenAIClient("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"));
+builder.Services.AddSingleton(new OpenAIClient("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"));
 builder.Services.AddSingleton<JsonProcessor>();
 
 builder.Services.AddControllers();
